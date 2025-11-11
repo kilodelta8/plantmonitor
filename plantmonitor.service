@@ -1,0 +1,39 @@
+[Unit]
+Description=Flask Plant Waterer Monitoring Service
+After=network.target
+
+[Service]
+
+User account to run the service (usually 'pi' on Raspberry Pi)
+
+User=pi
+
+Working directory where app.py resides
+
+WorkingDirectory=/home/pi/plantmonitor/
+
+Command to execute the Flask application:
+
+NOTE: Replace the path to python3 if yours is different.
+
+NOTE: Replace [YOUR_API_KEY] with the actual key you want to use.
+
+NOTE: Arguments are: [sys.argv[1] = API_KEY] and [sys.argv[2] = CITY_NAME]
+
+ExecStart=/usr/bin/python3 /home/pi/plantmonitor/app.py "YOUR_API_KEY_HERE" "YOUR CITY NAME"
+
+Restart the service if it stops unexpectedly
+
+Restart=always
+
+Set a delay before attempting a restart
+
+RestartSec=5
+
+Standard output/error settings (optional, good for debugging)
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

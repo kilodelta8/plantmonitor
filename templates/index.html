@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1><i class="fa-solid fa-leaf"></i> Plant Monitoring Dashboard</h1>
+
+<div class="dashboard-container">
+
+    <!-- Card 1: Moisture Gauge -->
+    <div class="card gauge-card">
+        <h2>Soil Moisture</h2>
+        <div class="gauge-container">
+            <!-- JavaScript will update this background -->
+            <div class="gauge-fill" id="gauge-fill"></div>
+            <div class="gauge-cover">
+                <!-- Initial value set by Flask, updated by JS -->
+                <span class="gauge-percentage" id="gauge-percent-text">{{ state.moisture_percent }}%</span>
+                <span class="gauge-label">Moisture</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: Temperature -->
+    <div class="card sensor-card">
+        <div class="sensor-data">
+            <span class="value" id="temp-value">{{ state.temp_c }}°C</span>
+            <span class="label">Temperature</span>
+        </div>
+        <i class="sensor-icon temp fa-solid fa-temperature-full"></i>
+    </div>
+    
+    <!-- Card 3: Humidity -->
+    <div class="card sensor-card">
+        <div class="sensor-data">
+            <span class="value" id="humidity-value">{{ state.humidity }}%</span>
+            <span class="label">Humidity</span>
+        </div>
+        <i class="sensor-icon humidity fa-solid fa-droplet"></i>
+    </div>
+
+    <!-- Card 4: Weather -->
+    <div class="card sensor-card">
+        <div class="sensor-data">
+            <span class="value" id="weather-desc">{{ state.weather_desc }}</span>
+            <span class="label" id="weather-rain">
+                {% if state.weather_rain %}
+                Rain is Expected
+                {% else %}
+                No Rain Expected
+                {% endif %}
+            </span>
+        </div>
+        <i class="sensor-icon weather fa-solid fa-cloud-sun-rain"></i>
+    </div>
+
+    <!-- Card 5: Controls -->
+    <div class="card control-card">
+        <h2>Controls</h2>
+        <button class="btn-water" id="manual-water-btn">
+            <i class="fa-solid fa-faucet-drip"></i> Manual Water
+        </button>
+        <div class="toggle-container">
+            <span class="toggle-label">Auto-Watering</span>
+            <label class="switch">
+                <input type="checkbox" id="auto-toggle" 
+                        {% if state.auto_watering_enabled %}checked{% endif %}>
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+    
+    <!-- Card 6: Status -->
+    <div class="card status-card">
+        <h2>System Status</h2>
+        <p><strong>Last Watered:</strong> <span id="last-watered-text">{{ state.last_water }}</span></p>
+        <p><strong>Last Sensor Update:</strong> <span id="last-update-text">{{ state.last_update }}</span></pre></p>
+    </div>
+
+</div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+{% endblock %}
