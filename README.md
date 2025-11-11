@@ -58,10 +58,10 @@ The Flask app (`app.py`) runs the server, gets weather data, and sends commands 
 
 3. Clone your project repository (assuming you push your files there):
 
-   ```bash
+   `
    git clone [https://your.repo.url/startrack-waterer.git](https://your.repo.url/startrack-waterer.git) /home/pi/plant-waterer
    cd /home/pi/plant-waterer
-````
+`
 
 **Option B: Manual Copy/Create**
 
@@ -97,21 +97,21 @@ The Flask app (`app.py`) runs the server, gets weather data, and sends commands 
 
 1.  **Check Status:** Verify the service is running:
 
-    ```bash
+    `
     sudo systemctl status plant_waterer.service
-    ```
+    `
 
 2.  **Check Logs:** View real-time output (including serial data and watering triggers):
 
-    ```bash
+    `
     sudo journalctl -u plant_waterer.service -f
-    ```
+    `
 
 3.  **Access Dashboard:** Open a browser on any device on the same network and navigate to the Pi's IP address on port 5000:
 
-    ```
+    `
     http://[Your.Pi.IP.Address]:5000
-    ```
+    `
 
 ## 5\. Next Steps / Calibration
 
