@@ -59,7 +59,7 @@ The Flask app (`app.py`) runs the server, gets weather data, and sends commands 
 3. Clone the project repository:
 
    `
-   git clone [https://your.repo.url/startrack-waterer.git](https://your.repo.url/startrack-waterer.git) /home/pi/plantmonitor
+   git clone [https://github.com/kilodelta8/plantmonitor.git](https://github.com/kilodelta8/plantmonitor.git) /home/pi/plantmonitor
    cd /home/pi/plantmonitor
     `
 
