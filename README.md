@@ -1,4 +1,4 @@
-# College Project: Automated Plant Waterer and Monitor (Arduino & Raspberry Pi)
+# Automated Plant Waterer and Monitor (Arduino & Raspberry Pi)
 
 This document outlines the construction, component list, and deployment instructions for the Automated Plant Waterer and Monitor system, which uses an **Arduino Uno** for sensor reading and pump control, and a **Raspberry Pi 3 B+** running a **Flask web server** for monitoring, scheduling, and weather-based automation.
 
@@ -56,18 +56,18 @@ The Flask app (`app.py`) runs the server, gets weather data, and sends commands 
 
 2. Install Git if necessary: `sudo apt install git`.
 
-3. Clone your project repository (assuming you push your files there):
+3. Clone the project repository:
 
    `
-   git clone [https://your.repo.url/startrack-waterer.git](https://your.repo.url/startrack-waterer.git) /home/pi/plant-waterer
-   cd /home/pi/plant-waterer
-`
+   git clone [https://your.repo.url/startrack-waterer.git](https://your.repo.url/startrack-waterer.git) /home/pi/plantmonitor
+   cd /home/pi/plantmonitor
+    `
 
 **Option B: Manual Copy/Create**
 
 1.  Create the directory structure: `mkdir -p /home/pi/plant-waterer/templates`
 
-2.  Copy `app.py`, `install.sh`, and `templates/index.html` into `/home/pi/plant-waterer/`.
+2.  Copy `app.py`, `install.sh`, and `templates/index.html` into `/home/pi/plantmonitor/`.
 
 3.  Ensure `install.sh` is executable: `chmod +x install.sh`
 
@@ -87,7 +87,7 @@ The Flask app (`app.py`) runs the server, gets weather data, and sends commands 
 
       * Find the `python3` executable path.
 
-      * Create the systemd service (`plant_waterer.service`).
+      * Create a systemd service (`plant_waterer.service`).
 
       * **The interactive diagnostic tool will run, allowing you to confirm the Arduino device path.**
 
@@ -104,7 +104,7 @@ The Flask app (`app.py`) runs the server, gets weather data, and sends commands 
 2.  **Check Logs:** View real-time output (including serial data and watering triggers):
 
     `
-    sudo journalctl -u plant_waterer.service -f
+    sudo journalctl -u plantmonitor.service -f
     `
 
 3.  **Access Dashboard:** Open a browser on any device on the same network and navigate to the Pi's IP address on port 5000:

@@ -19,8 +19,8 @@
 # 7. Provides an interactive diagnostic tool for connecting the Arduino.
 
 # --- CONFIGURATION ---
-PROJECT_DIR="/home/pi/plant-waterer"
-SERVICE_NAME="plant_waterer.service"
+PROJECT_DIR="/home/pi/plantmonitor"
+SERVICE_NAME="plantmonitor.service"
 SERVICE_PATH="/etc/systemd/system/$SERVICE_NAME"
 PYTHON_DEPS="Flask pyserial requests"
 
