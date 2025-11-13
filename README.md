@@ -52,6 +52,8 @@ The Flask app (`app.py`) runs the server, gets weather data, and sends commands 
 
 **Option A: Clone Repository (Recommended for Re-runs)**
 
+To be clear, you have to manually upload the arduino code to the arduino.  The installer only handles Pi side code.
+
 1. Log in to your Raspberry Pi via SSH or terminal.
 
 2. Install Git if necessary: `sudo apt install git`.

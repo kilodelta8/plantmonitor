@@ -157,6 +157,14 @@ deploy_service() {
     echo "To view logs: sudo journalctl -u $SERVICE_NAME -f"
 }
 
+# --- 7. REBOOT PROMPT ---
+reboot() {
+    echo "Rebooting the system to finalize installation..."
+    sudo reboot
+}
+
+
+
 # --- MAIN EXECUTION FLOW ---
 install_dependencies
 select_arduino_port
@@ -164,4 +172,5 @@ setup_files
 create_service_file
 deploy_service
 
-exit 0
+sleep 10
+reboot
