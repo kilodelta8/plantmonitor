@@ -22,7 +22,7 @@
 PROJECT_DIR="/home/pi/plantmonitor"
 SERVICE_NAME="plantmonitor.service"
 SERVICE_PATH="/etc/systemd/system/$SERVICE_NAME"
-PYTHON_DEPS="Flask pyserial requests"
+PYTHON_DEPS="Flask pyserial requests flash"
 
 # --- 1. ARGUMENT CHECK ---
 if [ "$#" -ne 2 ]; then
