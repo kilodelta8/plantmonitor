@@ -32,7 +32,7 @@
     <!-- Card 2: Temperature -->
     <div class="card sensor-card">
         <div class="sensor-data">
-            <span class="value" id="temp-value">{{ state.temp_c }}°C</span>
+            <span class="value" id="temp-value">{{ "%.1f"|format(state.temp_f) }}°F</span>
             <span class="label">Temperature</span>
         </div>
         <i class="sensor-icon temp fa-solid fa-temperature-full"></i>
@@ -87,6 +87,6 @@
 
 </div>
 
-    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>    
 </body>
 {% endblock %}

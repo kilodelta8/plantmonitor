@@ -61,7 +61,7 @@ async function updateDashboard() {
         setGaugeValue(data.moisture_percent);
 
         // Update Sensor Cards
-        tempValue.textContent = `${data.temp_c.toFixed(1)}°C`; // toFixed for clean look
+        tempValue.textContent = `${data.temp_f.toFixed(1)}°F`; // toFixed for clean look
         humidityValue.textContent = `${data.humidity.toFixed(1)}%`;
 
         // Update Weather Card

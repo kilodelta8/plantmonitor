@@ -59,12 +59,14 @@ system_state = {
     'moisture_raw': 0,
     'moisture_percent': 0,
     'temp_c': 0.0,
+    'temp_f': 0.0,
     'humidity': 0.0,
     'last_update': 'N/A',
     'weather_desc': 'Fetching...',
     'weather_rain': False,
     'last_water': 'N/A',
-    'auto_watering_enabled': True
+    'auto_watering_enabled': True,
+    'arduino_connected': False # New flag for connection status
 }
 
 # Variable for the Serial Connection object
@@ -98,12 +100,14 @@ def read_serial_thread():
                 ser = serial.Serial(port_path, BAUD_RATE, timeout=1)
                 time.sleep(2) # Wait for the Arduino to reset
                 ser.flushInput()
+                system_state['arduino_connected'] = True
                 print(f"Serial connection established on {port_path}")
                 break
             except serial.SerialException as e:
                 print(f"ERROR: Could not open serial port {port_path}. Retrying in 5s.")
                 ser = None 
                 time.sleep(5)
+                system_state['arduino_connected'] = False
         else:
             print("Arduino not found. Simulating sensor data for testing. Retrying scan in 10s...")
             # If no Arduino found, we simulate data to keep the Flask app running
@@ -112,6 +116,7 @@ def read_serial_thread():
             system_state['humidity'] = random.uniform(30.0, 60.0)
             system_state['last_update'] = datetime.now().strftime("%H:%M:%S")
             time.sleep(10)
+            system_state['arduino_connected'] = False
             
     # Main reading loop once connection is established
     while True:
@@ -130,6 +135,7 @@ def read_serial_thread():
                         # Update global state
                         system_state['moisture_raw'] = moisture_raw
                         system_state['temp_c'] = temp_c
+                        system_state['temp_f'] = (temp_c * 9/5) + 32 # Convert to Fahrenheit
                         system_state['humidity'] = humidity
                         system_state['last_update'] = datetime.now().strftime("%H:%M:%S")
 
@@ -141,7 +147,8 @@ def read_serial_thread():
 
         except Exception as e:
             print(f"Error reading serial data ({e}). Connection lost. Attempting to re-find port.")
-            ser = None # Reset serial connection on error
+            ser = None # Reset serial connection on error to trigger re-connect
+            system_state['arduino_connected'] = False
             # Break the inner loop to restart the port finding logic
             break 
         
@@ -250,9 +257,12 @@ app = Flask(__name__)
 
 # Route for the main dashboard
 @app.route('/')
-def index():
+def index():    
     """Renders the main monitoring dashboard."""
     # Pass the current system state to the HTML template
+    if not system_state['arduino_connected']:
+        # Use flash to send a message to the template
+        flash('Arduino not connected. Please check the USB connection and ensure the device has power.', 'danger')
     return render_template('index.html', state=system_state)
 
 # Route to get the current sensor data (for JavaScript updates)
