@@ -1,3 +1,14 @@
+// **********************************************************************
+// @file   dashboard.js
+// @author John Durham
+// @date   10/27/2025
+// @brief  This script handles the dynamic functionality of the plant
+//         monitoring dashboard. It updates the moisture gauge, sensor
+//         readings, weather information, and manages user interactions
+//         such as manual watering and toggling auto-watering.
+// **********************************************************************
+
+
 // --- 1. Element References ---
 const gaugeFill = document.getElementById('gauge-fill');
 const gaugePercentText = document.getElementById('gauge-percent-text');

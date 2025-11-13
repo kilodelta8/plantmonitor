@@ -1,3 +1,14 @@
+# **********************************************************************
+# @file   app.py
+# @author John Durham
+# @date   10/27/2025
+# @brief  This web application monitors soil moisture, temperature, and humidity
+#         using an Arduino connected via USB serial. It fetches real-time weather
+#         data from OpenWeatherMap to make intelligent watering decisions.
+#         The app provides a web dashboard for monitoring and manual control.
+# **********************************************************************
+
+
 import serial
 import time
 import threading

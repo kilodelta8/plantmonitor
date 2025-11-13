@@ -1,3 +1,10 @@
+/* **********************************************************************
+# @file   plant-controller.ino
+# @author John Durham
+# @date   10/27/2025
+# @brief  This code runs on the Arduino to read plant sensor data and control watering.
+# **********************************************************************/
+
 #include <DHT.h>
 
 // --- 1. PIN DEFINITIONS ---
