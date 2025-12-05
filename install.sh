@@ -47,12 +47,12 @@ install_dependencies() {
     
     # Use 'pip3' as it is the standard for Python 3 on Raspberry Pi OS
     if command -v pip3 &> /dev/null; then
-        sudo pip3 install $PYTHON_DEPS
+        sudo pip3 install -r requirements.txt
     else
         echo "pip3 not found. Installing python3-pip..."
         sudo apt update
         sudo apt install -y python3-pip
-        sudo pip3 install $PYTHON_DEPS
+        sudo pip3 install -r requirements.txt
     fi
     echo "Dependencies installed."
 }

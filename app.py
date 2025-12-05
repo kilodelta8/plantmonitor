@@ -15,7 +15,7 @@ import threading
 import requests
 import json
 import sys 
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, flash
 from datetime import datetime
 import serial.tools.list_ports 
 import random 
@@ -254,6 +254,7 @@ def auto_watering_scheduler():
 # --- 5. FLASK APPLICATION SETUP ---
 
 app = Flask(__name__)
+app.secret_key = 'super_secret_key_for_testing' # Required for flash messages
 
 # Route for the main dashboard
 @app.route('/')
