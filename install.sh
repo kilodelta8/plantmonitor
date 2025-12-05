@@ -43,17 +43,25 @@ echo ""
 
 # --- 2. DEPENDENCY INSTALLATION ---
 install_dependencies() {
-    echo "Checking and installing Python dependencies..."
+    echo "Creating project directory and setting up Virtual Environment..."
     
-    # Use 'pip3' as it is the standard for Python 3 on Raspberry Pi OS
-    if command -v pip3 &> /dev/null; then
-        sudo pip3 install -r requirements.txt
-    else
-        echo "pip3 not found. Installing python3-pip..."
-        sudo apt update
-        sudo apt install -y python3-pip
-        sudo pip3 install -r requirements.txt
+    # Ensure project directory exists (since we need it for the venv)
+    if [ ! -d "$PROJECT_DIR" ]; then
+        sudo mkdir -p "$PROJECT_DIR"
+        sudo chown pi:pi "$PROJECT_DIR"
     fi
+
+    # Create venv if it doesn't exist
+    if [ ! -d "$PROJECT_DIR/venv" ]; then
+        echo "Creating venv..."
+        sudo -u pi python3 -m venv "$PROJECT_DIR/venv"
+    fi
+
+    echo "Installing Python dependencies into venv..."
+    # Install dependencies using the venv's pip
+    # We reference requirements.txt from the current directory (the repo)
+    sudo -u pi "$PROJECT_DIR/venv/bin/pip" install -r requirements.txt
+
     echo "Dependencies installed."
 }
 
@@ -87,6 +95,7 @@ setup_files() {
     # Copy Python and HTML files (assuming they are in the current working directory)
     # Note: In a real environment, you'd pull these from a git repo.
     sudo cp app.py "$PROJECT_DIR/"
+    sudo cp -r static "$PROJECT_DIR/"
     sudo cp templates/index.html "$PROJECT_DIR/templates/"
 
     echo "Files copied successfully to $PROJECT_DIR."
@@ -94,13 +103,14 @@ setup_files() {
 
 # --- 5. SERVICE FILE GENERATION ---
 create_service_file() {
-    # Find the Python 3 executable path
-    PYTHON_EXEC=$(which python3)
-    if [ -z "$PYTHON_EXEC" ]; then
-        echo "ERROR: python3 executable not found. Installation aborted."
+    # Point to the Python executable INSIDE the virtual environment
+    PYTHON_EXEC="$PROJECT_DIR/venv/bin/python"
+    
+    if [ ! -f "$PYTHON_EXEC" ]; then
+        echo "ERROR: Virtual environment Python not found at $PYTHON_EXEC. Installation aborted."
         exit 1
     fi
-    echo "Using Python executable: $PYTHON_EXEC"
+    echo "Using venv Python executable: $PYTHON_EXEC"
 
     echo "Generating $SERVICE_NAME file..."
 
